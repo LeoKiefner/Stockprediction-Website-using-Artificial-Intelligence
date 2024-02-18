@@ -3,7 +3,7 @@ import './StockData.css';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import Papa from 'papaparse';
 import { useParams } from 'react-router-dom';
-import { fetchPredictions } from './PredictionModel'; // Assurez-vous d'avoir ce fichier ou un équivalent pour simuler les prédictions
+import { fetchPredictions } from './PredictionModel';
 
 const StockData = () => {
     const [data, setData] = useState([]);
@@ -15,18 +15,23 @@ const StockData = () => {
     const { stockSymbol } = useParams();
 
     useEffect(() => {
+        const loadPredictions = async (lastPrice) => {
+            const predictionData = await fetchPredictions(stockSymbol);
+            if (predictionData && predictionData.length > 0) {
+                const predictionsWithPercentage = predictionData.map(prediction => ({
+                    ...prediction,
+                    percentageChange: lastPrice !== 0 ? ((prediction.predictedPrice - lastPrice) / lastPrice) * 100 : 0
+                }));
+                setPredictions(predictionsWithPercentage);
+            }
+        };
+
         Papa.parse(`${process.env.PUBLIC_URL}/Data/${stockSymbol}.csv`, {
             download: true,
             header: true,
             complete: (result) => {
                 const now = new Date();
                 let startDate;
-
-                if (result.data.length > 0) {
-                    const lastEntry = result.data[result.data.length - 1];
-                    setCurrentPrice(parseFloat(lastEntry['Close']));
-                }
-
                 switch (filter) {
                     case '7 days':
                         startDate = new Date(now.getTime() - (7 * 24 * 60 * 60 * 1000));
@@ -49,34 +54,30 @@ const StockData = () => {
                     return rowDate >= startDate;
                 });
 
+                if (filteredData.length > 0) {
+                    const referencePrice = parseFloat(filteredData[0]['Close']);
+                    const lastPrice = parseFloat(filteredData[filteredData.length - 1]['Close']);
+                    const difference = lastPrice - referencePrice;
+                    const percentage = referencePrice !== 0 ? (difference / referencePrice) * 100 : 0;
+
+                    setCurrentPrice(lastPrice);
+                    setPercentageChange(percentage);
+
+                    loadPredictions(lastPrice);
+                }
+
                 const transformedData = filteredData.map(row => ({
                     date: row['Date'],
                     price: parseFloat(row['Close'])
                 }));
-
                 setData(transformedData);
-
-                if (filteredData.length > 0) {
-                    const referencePrice = parseFloat(filteredData[0]['Close']);
-                    const difference = currentPrice - referencePrice;
-                    const percentage = (difference / referencePrice) * 100;
-                    setPercentageChange(percentage);
-                }
             }
         });
-
-        const loadPredictions = async () => {
-            const predictionData = await fetchPredictions(stockSymbol);
-            setPredictions(predictionData);
-        };
-
-        loadPredictions();
     }, [filter, stockSymbol]);
 
     const handleFilterChange = (event) => {
         setFilter(event.target.value);
     };
-
     return (
         <div className="stockDataContainer">
             <h2>Valeur boursière de {stockSymbol.toUpperCase()}</h2>
@@ -127,7 +128,7 @@ const StockData = () => {
                         width={80}
                         tickFormatter={(value) => `$${value.toFixed(2)}`}
                     />
-                    <Tooltip />
+                    <Tooltip formatter={(value, name, props) => [`${value.toFixed(2)} (${props.payload.percentageChange.toFixed(2)}%)`, name]} />
                     <Legend />
                     <Line type="monotone" dataKey="predictedPrice" stroke="#82ca9d" activeDot={{ r: 8 }} />
                 </LineChart>
