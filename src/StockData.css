@@ -1,0 +1,111 @@
+/* StockData.css */
+
+/* Import de la police */
+@font-face {
+    font-family: 'Intro';
+    src: url('../fonts/IntroDemo-BlackCAPS.woff2') format('woff2'), /* Format WOFF2 pour une meilleure compatibilité */
+    url('../fonts/IntroDemo-BlackCAPS.woff') format('woff'); /* Format WOFF pour une compatibilité supplémentaire */
+    font-weight: normal;
+    font-style: normal;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Empêche le défilement si le contenu dépasse la vue */
+}
+
+.stockDataContainer {
+    position: fixed; /* Position fixe pour que le conteneur soit toujours visible */
+    top: 0;
+    left: 0;
+    width: 100%; /* Largeur totale */
+    height: 100%; /* Hauteur totale */
+    z-index: 1000; /* Assure qu'il reste au-dessus des autres éléments */
+    text-align: center;
+    padding: 20px; /* Conservez le padding si vous voulez un espace autour du contenu interne */
+    border-radius: 0; /* Un rayon de bordure de 0 pour un conteneur plein écran */
+    box-shadow: none; /* Pas d'ombre pour un conteneur plein écran */
+    background-color: #282c34;
+    font-family: 'Intro', sans-serif; /* Utilisation de la police Intro */
+    color: white;
+    display: flex; /* Ajouté pour la mise en page flex */
+    flex-direction: column; /* Direction de la pile flex */
+    justify-content: center; /* Centrage vertical */
+    align-items: center; /* Centrage horizontal */
+}
+
+
+.title {
+    font-size: 3rem;
+    color: #61dafb;
+    margin-top: 0; /* Ajustement pour le titre */
+    margin-bottom: 0.5rem; /* Ajustement pour le titre */
+    text-transform: uppercase;
+}
+
+.welcomeMessage {
+    font-size: 1.2rem;
+    margin: 0; /* Retire les marges pour maximiser l'espace */
+    color: #ccc;
+}
+
+.currentValue {
+    font-size: 1.3rem;
+    color: #ddd;
+    margin: 0; /* Retire les marges pour maximiser l'espace */
+}
+
+.chartContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%; /* Ajustez la largeur pour s'adapter au conteneur */
+    height: auto; /* Hauteur automatique pour s'adapter au contenu */
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.chartContainer {
+    animation: fadeIn 1s ease-in-out;
+}
+
+:root {
+    --primary-color: #61dafb; /* Bleu */
+    --background-color: #282c34; /* Gris foncé */
+    --text-color: #ffffff; /* Blanc */
+    --accent-color: #ff6f61; /* Corail pour les accents */
+    --font-primary: 'Intro', sans-serif; /* Utilisation de la police Intro */
+    --font-title: 'Montserrat', sans-serif; /* Police pour les titres */
+}
+
+body {
+    font-family: var(--font-primary);
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+.title {
+    font-family: var(--font-title);
+    font-size: 3rem; /* Je suppose que la taille du titre devrait être de 3rem, pas 30rem */
+    color: var(--primary-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+    animation: popIn 1s ease-in-out;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+}

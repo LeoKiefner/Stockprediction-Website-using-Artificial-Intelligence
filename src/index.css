@@ -1,13 +1,23 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Import de la police */
+@font-face {
+  font-family: 'Intro';
+  src: url('../fonts/IntroDemo-BlackCAPS.woff2') format('woff2'),
+  url('../fonts/IntroDemo-BlackCAPS.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root {
+  --primary-color: #61dafb;
+  --background-color: #282c34;
+  --text-color: #ffffff;
+  --accent-color: #ff6f61;
+  --font-primary: 'Intro', sans-serif;
+  --font-title: 'Montserrat', sans-serif;
+}
+
+body {
+  font-family: var(--font-primary);
+  color: var(--text-color);
+  background-color: var(--background-color);
 }

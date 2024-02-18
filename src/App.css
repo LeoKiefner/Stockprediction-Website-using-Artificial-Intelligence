@@ -1,38 +1,57 @@
+/* Import de la police */
+@font-face {
+  font-family: 'Intro';
+  src: url('../fonts/IntroDemo-BlackCAPS.woff2') format('woff2'), /* Format WOFF2 pour une meilleure compatibilité */
+  url('../fonts/IntroDemo-BlackCAPS.woff') format('woff'); /* Format WOFF pour une compatibilité supplémentaire */
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Utilisation de la police Intro */
+* {
+  font-family: 'Intro', sans-serif; /* Utilisation de la police Intro pour tous les éléments */
+}
+
+/* Le reste de votre CSS */
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 100vh; /* Utiliser toute la hauteur de l'écran */
 }
 
-.App-link {
-  color: #61dafb;
+.App-header {
+  text-align: center;
+  opacity: 0; /* Définir l'opacité initiale à 0 */
+  animation: fadeIn 1s ease forwards; /* Animation de transition */
 }
 
-@keyframes App-logo-spin {
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(-20px); /* Animation de déplacement vers le haut */
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0); /* Animation de retour à la position originale */
   }
+}
+
+h1 {
+  font-size: 6rem; /* Augmenter la taille du titre */
+  margin-top: 50px; /* Ajouter une marge en haut du titre */
+}
+
+h2 {
+  font-size: 1.5rem; /* Taille de la sous-titre */
+  color: #ccc; /* Couleur du sous-titre */
+  margin-bottom: 30px; /* Marge en bas du sous-titre */
+}
+
+/* Liens */
+a {
+  color: #61dafb; /* Couleur du lien */
+  text-decoration: none; /* Supprimer la décoration de soulignement */
+  font-size: 1.2rem; /* Taille du lien */
 }
