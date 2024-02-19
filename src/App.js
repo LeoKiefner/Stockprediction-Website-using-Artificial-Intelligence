@@ -8,8 +8,8 @@ function App() {
         <Router>
             <div className="App">
                 <header className="App-header">
-                    <h1>Stock's Future</h1>
-                    <h2>Voir les données boursières de grandes entreprises et leurs prédictions</h2>
+                    <h1>Stock-Prediction.ai</h1>
+                    <h2>Voir les données boursières de grandes entreprises et les prédictions d'une IA.</h2>
 
                     <nav>
                         <ul>
@@ -21,6 +21,8 @@ function App() {
                             {/* Ajoutez d'autres entreprises si nécessaire */}
                         </ul>
                     </nav>
+
+                    <li> Nous ne nous tenons pas responsables de quelconques pertes financières, etc... les données générées par l'IA peut se tromper.</li>
                 </header>
                 <Routes>
                     <Route path="/StockData/:stockSymbol" element={<StockData />} /> {/* Modification ici pour utiliser `stockSymbol` */}
